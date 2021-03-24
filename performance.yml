@@ -38,4 +38,8 @@ scenarios:
       # Get an active task
       - get:
           url: "/tasks/{{idTask}}"
+
+      # Get active tasks
+      - get:
+          url: "/tasks"
   # For more information: https://artillery.io/docs/script-reference/
