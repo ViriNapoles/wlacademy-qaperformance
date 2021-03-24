@@ -4,7 +4,8 @@
   "description": "Performance testin - Assignment 3",
   "main": "index.js",
   "scripts": {
-    "test": "test-run-artillery"
+    "test": "artillery run --output reports/report.json performance.yml && artillery report --output reports/report.html reports/report.json",
+    "test-production": "artillery run -e production performance.yml --output reports/report.json performance.yml && artillery report --output reports/report.html reports/report.json"
   },
   "repository": {
     "type": "git",
