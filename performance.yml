@@ -1,11 +1,34 @@
 config:
-  target: "https://developer.todoist.com/"
-  phases:
-    - duration: 1
-      arrivalRate: 1
-      name: "Phase 1"
+  environments:
+    production:
+      target: "https://api.todoist.com/rest/v1"
+      phases:
+        - duration: 3
+          arrivalRate: 1
+          name: "Phase 1"
   defaults:
     headers:
       Authorization: Bearer {{ $processEnvironment.TOKEN }}
       Content-type: application/json
-# processor: "./myProcessor.js"
+  # processor: "./myProcessor.js"
+scenarios:
+  - flow:
+      - log: "The current environment is: {{$environment}}"
+      - post: #Create a project
+          url: "/projects"
+          json:
+            name: "Project from artillery"
+          capture:
+            json: "$.id"
+            as: idProject
+      - post: #Create a task
+          url: "/tasks"
+          json:
+            content: "Task from artillery"
+            project_id: "{{idProject}}"
+          capture:
+            json: "$.id"
+            as: idTask
+      - log: "The task_id is: {{idTask}} to the project_id: {{idProject}}"
+
+  # For more information: https://artillery.io/docs/script-reference/
