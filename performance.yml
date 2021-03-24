@@ -1,0 +1,11 @@
+config:
+  target: "https://developer.todoist.com/"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      name: "Phase 1"
+  defaults:
+    headers:
+      Authorization: Bearer {{ $processEnvironment.TOKEN }}
+      Content-type: application/json
+# processor: "./myProcessor.js"
