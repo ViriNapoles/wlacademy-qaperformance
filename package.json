@@ -1,0 +1,22 @@
+{
+  "name": "wlacademy-qaperformance",
+  "version": "1.0.0",
+  "description": "Performance testin - Assignment 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "test-run-artillery"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViriNapoles/wlacademy-qaperformance.git"
+  },
+  "author": "Viri Napoles",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ViriNapoles/wlacademy-qaperformance/issues"
+  },
+  "homepage": "https://github.com/ViriNapoles/wlacademy-qaperformance#readme",
+  "dependencies": {
+    "artillery": "^1.6.2"
+  }
+}
