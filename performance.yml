@@ -16,7 +16,7 @@ scenarios:
       - log: "The current environment is: {{$environment}}"
       
       #Create a project
-      - post:
+      - Post:
           url: "/projects"
           json:
             name: "Project from artillery"
@@ -25,7 +25,7 @@ scenarios:
             as: idProject
 
       #Create a task
-      - post:
+      - Post:
           url: "/tasks"
           json:
             content: "Task from artillery"
@@ -36,22 +36,28 @@ scenarios:
       - log: "The task_id is: {{idTask}} to the project_id: {{idProject}}"
       
       # Get an active task
-      - get:
+      - Get:
           url: "/tasks/{{idTask}}"
 
       # Get active tasks
-      - get:
+      - Get:
           url: "/tasks"
       
       # Update a task
-      - post:
+      - Post:
           url: "/tasks/{{idTask}}"
           json:
             content: "Update a task name"
       - log: "The task name {{idTask}} was updated"
 
       # Complete task
-      - post:
+      - Post:
           url: "/tasks/{{idTask}}/close"
       - log: "The task {{idTask}} was closed"
+
+      # Reopen task
+      - Post:
+          url: "/tasks/{{idTask}}/reopen"
+      - log: "The tas {{idTask}} was reopened"
+
   # For more information: https://artillery.io/docs/script-reference/
