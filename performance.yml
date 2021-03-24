@@ -42,4 +42,11 @@ scenarios:
       # Get active tasks
       - get:
           url: "/tasks"
+      
+      # Update a task
+      - post:
+          url: "/tasks/{{idTask}}"
+          json:
+            content: "Update a task name"
+      - log: "The task name {{idTask}} was updated"
   # For more information: https://artillery.io/docs/script-reference/
