@@ -49,4 +49,9 @@ scenarios:
           json:
             content: "Update a task name"
       - log: "The task name {{idTask}} was updated"
+
+      # Complete task
+      - post:
+          url: "/tasks/{{idTask}}/close"
+      - log: "The task {{idTask}} was closed"
   # For more information: https://artillery.io/docs/script-reference/
