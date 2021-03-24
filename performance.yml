@@ -14,14 +14,18 @@ config:
 scenarios:
   - flow:
       - log: "The current environment is: {{$environment}}"
-      - post: #Create a project
+      
+      #Create a project
+      - post:
           url: "/projects"
           json:
             name: "Project from artillery"
           capture:
             json: "$.id"
             as: idProject
-      - post: #Create a task
+
+      #Create a task
+      - post:
           url: "/tasks"
           json:
             content: "Task from artillery"
@@ -30,5 +34,8 @@ scenarios:
             json: "$.id"
             as: idTask
       - log: "The task_id is: {{idTask}} to the project_id: {{idProject}}"
-
+      
+      # Get an active task
+      - get:
+          url: "/tasks/{{idTask}}"
   # For more information: https://artillery.io/docs/script-reference/
