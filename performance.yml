@@ -3,37 +3,40 @@ config:
     production:
       target: "https://api.todoist.com/rest/v1"
       phases:
-        - duration: 3
-          arrivalRate: 1
+        - duration: 6
+          arrivalRate: 2
           name: "Phase 1"
+      processor: "./generateData.js"
   defaults:
     headers:
       Authorization: Bearer {{ $processEnvironment.TOKEN }}
       Content-type: application/json
-  # processor: "./myProcessor.js"
 scenarios:
-  - flow:
-      - log: "The current environment is: {{$environment}}"
+  - name: "Create a Project"
+    flow:
+      - log: "The current environment is: {{ $environment }}"
       
       #Create a project
+      - function: "generateProjectData"
       - post:
           url: "/projects"
           json:
-            name: "Project from artillery-02"
+            name: "{{ projectName }} "
           capture:
             json: "$.id"
             as: idProject
 
       #Create a task
+      - function: "generateTaskData"
       - post:
           url: "/tasks"
           json:
-            content: "Task from artillery-02"
-            project_id: "{{idProject}}"
+            content: "{{ taskName }}"
+            project_id: "{{ idProject }}"
           capture:
             json: "$.id"
             as: idTask
-      - log: "The task_id is: {{idTask}} to the project_id: {{idProject}}"
+      - log: "The task_id is: {{ idTask }} to the project_id: {{ idProject }}"
       
       # Get an active task
       - get:
@@ -44,25 +47,29 @@ scenarios:
           url: "/tasks"
       
       # Update a task
+      - function: "generateTaskData"
       - post:
           url: "/tasks/{{idTask}}"
           json:
-            content: "Update a task name"
-      - log: "The task name {{idTask}} was updated"
+            content: "{{ updateTaskContent }}"
+      - log: "The task name {{ idTask }} was updated"
 
       # Complete task
       - post:
           url: "/tasks/{{idTask}}/close"
-      - log: "The task {{idTask}} was closed"
+      - log: "The task {{ idTask }} was closed"
 
       # Reopen task
       - post:
           url: "/tasks/{{idTask}}/reopen"
-      - log: "The task {{idTask}} was reopened"
+      - log: "The task {{ idTask }} was reopened"
 
       # Delete task
       - delete:
           url: "/tasks/{{idTask}}"
-      - log: "The task {{idTask}} was deleted"
+      - log: "The task {{ idTask }} was deleted"
 
-  # For more information: https://artillery.io/docs/script-reference/
+      # Delete project
+      - delete:
+          url: "/projects/{{idProject}}"
+      - log: "The project {{ idProject }} was deleted"
