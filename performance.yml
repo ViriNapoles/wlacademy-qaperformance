@@ -60,4 +60,9 @@ scenarios:
           url: "/tasks/{{idTask}}/reopen"
       - log: "The tas {{idTask}} was reopened"
 
+      # Delete task
+      - Delete:
+          url: "/tasks/{{idTask}}"
+      - log: "The task {{idTask}} was deleted"
+      
   # For more information: https://artillery.io/docs/script-reference/
